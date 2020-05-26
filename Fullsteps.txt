@@ -1,0 +1,38 @@
+Full steps
+Please prepare user name and password of Admin
+Open Powershell
+
+$UserCredential = Get-Credential 
+
+$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://ps.compliance.protection.outlook.com/powershell-liveid/ -Credential $UserCredential -Authentication Basic -AllowRedirection 
+
+Import-PSSession $Session -DisableNameChecking 
+
+New-DlpSensitiveInformationTypeRulePackage -FileData (Get-Content -Path "C:\Users\shinjik\OneDrive - Microsoft\gbb\cc\JP_offensive.xml" -Encoding Byte) 
+
+Set-DlpSensitiveInformationTypeRulePackage -FileData (Get-Content -Path ".\JP_Offensive.xml" -Encoding Byte) 
+
+#Confirmation@
+Get-DlpSensitiveInformationTypeRulePackage
+
+---End of Powershell
+
+open Data Loss Prevention on compliance.microsoft.com
+create new Custom
+Add the one defined in XML file in Sensitive Info Types
+
+open Alerts on protection.office.com
+open Alerts policies
+Choose one created
+Edit
+You can reduce 'Trigger an alert when the volume of matched activities are:' to 3
+
+return to Communication compliance 
+create custom policy
+Condition > Add condition > 
+Content contains any of these sensitive info types
+Choose one XML specifies
+Change 'Review percentage' to 100%
+Check the status on Policies page. 
+
+---ALL DONE.
